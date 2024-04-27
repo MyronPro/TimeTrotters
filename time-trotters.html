@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TimeTrotters</title>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<style>
+    body, .container {
+        display: flex;
+        justify-content: center; 
+        align-items: center; 
+        height: 100vh; 
+        margin: 0; 
+    }
+
+    .container {
+        flex-direction: column; 
+        width: 100%; 
+    }
+
+    #game-board {
+        display: flex;
+        justify-content: center; 
+        width: 100%; 
+        margin-bottom: 10rem;
+    }
+
+    .lane {
+        flex: 1;
+        height: 150px;
+        background-color: lightgray;
+        border: 1px solid black;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #cards-container {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+    }
+
+    .card {
+        width: 100px;
+        height: 150px;
+        background-color: white;
+        border: 1px solid black;
+        cursor: pointer; 
+        margin-left: 10px; 
+        margin-right: 10px;
+        font-size: 10px;
+    }
+
+  .tick-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px; 
+}
+
+.tick-text {
+    position: absolute;
+    top: -20px; /
+    text-align: center;
+    font-weight: bold;
+    width: 100%; 
+}
+
+.tick {
+    width: 1rem; 
+    height: 100%; 
+    background-color: black;
+}
+
+.tick-container {
+    display: none; 
+}
+
+.lane {
+    display: flex;
+}
+
+.correct {
+    border: 2px solid green;
+}
+
+.incorrect {
+    border: 2px solid red;
+}
+
+.show-year:hover::after {
+    content: attr(year);
+    position: absolute;
+    background: white;
+    padding: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    border-radius: 4px;
+    white-space: nowrap;
+    font-weight: bold;
+}
+
+</style>
+</head>
+<body>
+<div class="container">
+    <div id="game-board">
+        <div class="lane" draggable="true"></div>
+        <div id="tick1" class="tick-container">
+            <div class="tick-text">1955</div>
+            <div class="tick mx-3"></div>
+        </div>
+        <div class="lane" draggable="true"></div>
+        <div id="tick2" class="tick-container">
+            <div class="tick-text">1961</div>
+            <div class="tick mx-3"></div>
+        </div>
+        <div class="lane" draggable="true"></div>
+        <div id="tick3" class="tick-container">
+            <div class="tick-text">1963</div>
+            <div class="tick mx-3"></div>
+        </div>
+        <div class="lane" draggable="true"></div>
+        <div id="tick4" class="tick-container">
+            <div class="tick-text">1967</div>
+            <div class="tick mx-3"></div>
+        </div>
+        <div class="lane" draggable="true"></div>
+         <div id="tick5" class="tick-container">
+            <div class="tick-text">1970</div>
+            <div class="tick mx-3"></div>
+        </div>
+        <div class="lane" draggable="true"></div>
+    </div>
+
+    <div id="cards-container">
+        <!-- Cards will be dynamically added here -->
+    </div>
+
+    <button id="turnBtn" class="mt-3">Next Turn</button>
+
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="game-engine.js"></script>
+        
+</body>
+</html>
