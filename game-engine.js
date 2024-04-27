@@ -1,5 +1,5 @@
  // Define card data
- var cardsData = [
+ const cardsData = [
     { Year: 1964, Description: "President Lyndon B. Johnson signs Civil Rights Act into law, preventing employment discrimination due to race, color, sex, religion or national origin." },
     { Year: 1954, Description: "Brown v. Board of Education, a consolidation of five cases into one, is decided by the Supreme Court, effectively ending racial segregation in public schools." },
     { Year: 1955, Description: "Rosa Parks refuses to give up her seat to a white man on a Montgomery, Alabama bus. Her defiant stance prompts a year-long Montgomery bus boycott." },
@@ -11,7 +11,7 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     // Prompt user to choose between random or hardcoded tick values
-    var useRandomTicks = confirm("Would you like to generate random tick values? Click 'OK' for yes or 'Cancel' for no.");
+    let useRandomTicks = confirm("Would you like to generate random tick values? Click 'OK' for yes or 'Cancel' for no.");
 
     if (useRandomTicks) {
         // Generate random tick dates between 1952 to 1970
@@ -20,16 +20,16 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function generateRandomTickDates(numberOfTicks, startYear, endYear) {
-    var tickYears = new Set();  // Use a Set to store unique years
+    let tickYears = new Set();  // Use a Set to store unique years
 
     // Generate random years within the specified range
     while (tickYears.size < numberOfTicks) {
-        var randomYear = Math.floor(Math.random() * (endYear - startYear + 1)) + startYear;
+        let randomYear = Math.floor(Math.random() * (endYear - startYear + 1)) + startYear;
         tickYears.add(randomYear);
     }
 
     // Convert the Set to an array and sort years in ascending order
-    var sortedTickYears = Array.from(tickYears).sort((a, b) => a - b);
+    const sortedTickYears = Array.from(tickYears).sort((a, b) => a - b);
 
     // Assign years to the tick containers
     $('.tick-container .tick-text').each(function(index, element) {
@@ -42,12 +42,16 @@ function generateRandomTickDates(numberOfTicks, startYear, endYear) {
 
 $(document).ready(function() {
 
-    var hasMovedHandCard = false; 
-    var hasMovedLaneCard = false;
-    var handIndices = shuffleArray([...Array(cardsData.length).keys()]).slice(0, 5);
-    var hand = handIndices.map(index => cardsData[index]);
-    var tickContainers = $('.tick-container');
-    var shuffledIndices = shuffleArray([...Array(tickContainers.length).keys()]);
+    let hasMovedHandCard = false; 
+    let hasMovedLaneCard = false;
+    const handIndices = shuffleArray([...Array(cardsData.length).keys()]).slice(0, 5);
+    let hand = handIndices.map(index => cardsData[index]);
+    const tickContainers = $('.tick-container');
+    const shuffledIndices = shuffleArray([...Array(tickContainers.length).keys()]);
+
+    let turn = 0;
+    revealTickAndLanes(shuffledIndices[turn]);
+    turn++;
 
     // Create and append the cards using the card data
     hand.forEach(function(cardData, index) {
@@ -74,8 +78,8 @@ $(document).ready(function() {
     $('.lane').on('drop', function(event) {
         if (!hasMovedHandCard) {
             event.preventDefault();
-            var id = event.originalEvent.dataTransfer.getData('text');
-            var card = document.getElementById(id);
+            let id = event.originalEvent.dataTransfer.getData('text');
+            let card = document.getElementById(id);
             if (card && $(card).closest('#cards-container').length > 0) { // Ensure it's a hand card
                 event.target.appendChild(card);
                 hasMovedHandCard = true; // Mark that a hand card has been moved
@@ -102,8 +106,8 @@ $(document).ready(function() {
     $('.lane').on('drop', function(event) {
         if (!hasMovedLaneCard) {
             event.preventDefault();
-            var id = event.originalEvent.dataTransfer.getData('text');
-            var card = document.getElementById(id);
+            let id = event.originalEvent.dataTransfer.getData('text');
+            let card = document.getElementById(id);
             if (card && $(card).closest('.lane').length > 0) { // Ensure it's a lane card
                 event.target.appendChild(card);
                 hasMovedLaneCard = true; // Mark that a lane card has been moved
@@ -122,9 +126,7 @@ $(document).ready(function() {
         return array;
     }
 
-    var turn = 0;
-    revealTickAndLanes(shuffledIndices[turn]);
-    turn++;
+    
 
 
 
@@ -150,32 +152,32 @@ $(document).ready(function() {
             }
         } else {
             $('#turnBtn').prop('disabled', true);
-            var results = calculateScores(); // Calculate scores at the end of turns
+            let results = calculateScores(); // Calculate scores at the end of turns
             displayScores(results); // Pass the scores for display
         }
     }
 
 
     function calculateScores() {
-        var lanes = $('.lane');
-        var scores = [];
+        const lanes = $('.lane');
+        let scores = [];
     
         lanes.each(function(index, lane) {
-            var cards = $(lane).find('.card');
-            var score = 0; // Initialize score for each lane
+            let cards = $(lane).find('.card');
+            let score = 0; // Initialize score for each lane
     
             // Check if the lane has a previous tick container
-            var hasPreviousTick = $(lane).prev('.tick-container').length > 0;
-            var hasNextTick = $(lane).next('.tick-container').length > 0;
+            let hasPreviousTick = $(lane).prev('.tick-container').length > 0;
+            let hasNextTick = $(lane).next('.tick-container').length > 0;
     
-            var previousTickYear = hasPreviousTick ? 
+            let previousTickYear = hasPreviousTick ? 
                 parseInt($(lane).prev('.tick-container').find('.tick-text').text()) : null;
-            var nextTickYear = hasNextTick ? 
+            let nextTickYear = hasNextTick ? 
                 parseInt($(lane).next('.tick-container').find('.tick-text').text()) : null;
     
             cards.each(function(idx, card) {
-                var cardYear = parseInt($(card).attr('year'));
-                var cardScored = false; // Flag to determine if the card is scored
+                let cardYear = parseInt($(card).attr('year'));
+                let cardScored = false; // Flag to determine if the card is scored
                 
                 // If it's the leftmost lane, only check if the card year is less than the next tick year
                 if (!hasPreviousTick && cardYear < nextTickYear) {
@@ -208,8 +210,8 @@ $(document).ready(function() {
     
 
     function displayScores(scores) {
-        var totalScore = scores.reduce((acc, score) => acc + score, 0); 
-        var scoreText = 'Total Score: ' + totalScore + '\n'; 
+        let totalScore = scores.reduce((acc, score) => acc + score, 0); 
+        let scoreText = 'Total Score: ' + totalScore + '\n'; 
 
         scores.forEach(function(score, index) { 
             scoreText += 'Lane ' + (index + 1) + ': ' + score + ' points;\n';
