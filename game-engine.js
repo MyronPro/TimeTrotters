@@ -1,13 +1,4 @@
- // Define card data
- const cardsData = [
-    { Year: 1964, Description: "President Lyndon B. Johnson signs Civil Rights Act into law, preventing employment discrimination due to race, color, sex, religion or national origin." },
-    { Year: 1954, Description: "Brown v. Board of Education, a consolidation of five cases into one, is decided by the Supreme Court, effectively ending racial segregation in public schools." },
-    { Year: 1955, Description: "Rosa Parks refuses to give up her seat to a white man on a Montgomery, Alabama bus. Her defiant stance prompts a year-long Montgomery bus boycott." },
-    { Year: 1963, Description: "Martin Luther King Jr. delivers his 'I Have a Dream' speech during the March on Washington for Jobs and Freedom." },
-    { Year: 1965, Description: "Selma to Montgomery marches, pivotal in the American civil rights movement, highlight the demand for African American voting rights." },
-    { Year: 1961, Description: "Ruby Bridges is escorted by four armed federal marshals as she becomes the first student to integrate William Frantz Elementary School in New Orleans." },
-    { Year: 1968, Description: "President Lyndon B. Johnson signs the Fair Housing Act into law, providing equal housing opportunity regardless of race, religion or national origin." }
-];
+import { cardData } from './decks.js';
 
 document.addEventListener('DOMContentLoaded', function() {
     // Prompt user to choose between random or hardcoded tick values
@@ -44,8 +35,8 @@ $(document).ready(function() {
 
     let hasMovedHandCard = false; 
     let hasMovedLaneCard = false;
-    const handIndices = shuffleArray([...Array(cardsData.length).keys()]).slice(0, 5);
-    let hand = handIndices.map(index => cardsData[index]);
+    const handIndices = shuffleArray([...Array(cardData.length).keys()]).slice(0, 5);
+    let hand = handIndices.map(index => cardData[index]);
     const tickContainers = $('.tick-container');
     const shuffledIndices = shuffleArray([...Array(tickContainers.length).keys()]);
 
@@ -126,17 +117,11 @@ $(document).ready(function() {
         return array;
     }
 
-    
-
-
-
     function revealTickAndLanes(index) {
         // Display the current tick
         $(tickContainers[index]).css('display', 'flex');
 
     }
-
-
 
     function nextTurn() {
         console.log("Clicked " + turn);
@@ -156,7 +141,6 @@ $(document).ready(function() {
             displayScores(results); // Pass the scores for display
         }
     }
-
 
     function calculateScores() {
         const lanes = $('.lane');
@@ -208,7 +192,6 @@ $(document).ready(function() {
         return scores;
     }
     
-
     function displayScores(scores) {
         let totalScore = scores.reduce((acc, score) => acc + score, 0); 
         let scoreText = 'Total Score: ' + totalScore + '\n'; 
