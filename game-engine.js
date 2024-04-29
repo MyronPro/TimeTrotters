@@ -46,7 +46,13 @@ $(document).ready(function() {
 
     // Create and append the cards using the card data
     hand.forEach(function(cardData, index) {
-        let card = $(`<div class="card p-1" id="card${index}" year="${cardData.Year}">${cardData.Description}</div>`);
+        let cardContent;
+        if (cardData.ImagePath) {
+            cardContent = `<img src="${cardData.ImagePath}" alt="${cardData.Description}" draggable="false">`;
+        } else if (cardData.Description) {
+            cardContent = `${cardData.Description}`;
+        }
+        let card = $(`<div class="card p-1" id="card${index}" year="${cardData.Year}">${cardContent}</div>`);
         $('#cards-container').append(card);
     });
 
